@@ -1,4 +1,4 @@
-package project2;
+package project3;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -107,16 +107,18 @@ public class KNNPredictor extends Predictor{
         });
 
         int count = 0;
-        int countx = 0;
-        int county = 0;
+        int count0 = 0;
+        int count1 = 0;
         while (count < k) {
             if (distanceAndLabel[count][1] == 0.0) {
-                countx++;
+                count0++;
             } else {
-                county++;
+                count1++;
             }
             count++;
-        }if (countx > county) {
+        }
+
+        if (count0 > count1) {
             return "0";
         } else {
             return "1";

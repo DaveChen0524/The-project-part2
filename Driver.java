@@ -1,4 +1,4 @@
-package project2;
+package project3;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ private void initAndShowGUI(Double accuracy, Double precision) {
         Label preL = new Label(pre);
         contentPane.add(new Label("the precision: "));
         contentPane.add(preL);
-        myFrame.pack();myFrame.setVisible(true);myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.pack(); myFrame.setVisible(true);myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         resetK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,11 +48,13 @@ private void initAndShowGUI(Double accuracy, Double precision) {
 
             }
         });
-    }public static void main(String args[]) {
-	 Driver driver = new Driver();
-	 KNNPredictor knnPredictor = new KNNPredictor(5);
-	 String fileName = "titanic.csv";
-	 ArrayList<DataPoint> dps = knnPredictor.readData(fileName);
+    }
+public static void main(String args[]) {
+    	Driver driver = new Driver();
+        KNNPredictor knnPredictor = new KNNPredictor(5);
+        String fileName = "titanic.csv";
+
+        ArrayList<DataPoint> dps = knnPredictor.readData(fileName);
 
         SwingUtilities.invokeLater(
                 new Runnable() {

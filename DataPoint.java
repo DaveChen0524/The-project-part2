@@ -1,4 +1,4 @@
-package project2;
+package project3;
 
 public class DataPoint {
 
@@ -6,9 +6,9 @@ public class DataPoint {
     private Double f2;
     private String label;
     private Boolean isTest;
+    
+    private String type;
 
-    public DataPoint() {
-    }
 
     public DataPoint(Double f1, Double f2, String label, Boolean isTest) {
         this.f1 = f1;
@@ -48,6 +48,10 @@ public class DataPoint {
     }
 
     public void setTest(Boolean isTest) {
-        isTest = isTest;
+        this.isTest = isTest;
+    }public String getType() {
+        return type;
+    }public void setType(String type) {
+        this.type = type;
     }
 }

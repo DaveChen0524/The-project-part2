@@ -1,4 +1,4 @@
-package project2;
+package project3;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,16 +20,16 @@ public class DummyPredictor extends Predictor {
                         strAry[2],
                         Boolean.valueOf(strAry[3]));
                 dataPoints.add(dataPoint);
-            }setAvg(dataPoints); return dataPoints;
+            }setAvg(dataPoints);return dataPoints;
         } catch (FileNotFoundException e) {e.printStackTrace();
         } catch (IOException e) {e.printStackTrace();
         }return null;
     }@Override
     String test(DataPoint data) {
         double diff = Math.abs(data.getF1() - data.getF2());
-        double x = Math.abs(diff - this.avgTest);
-        double y = Math.abs(diff - this.avgTraining);
-        if(x < y) {
+        double a = Math.abs(diff - this.avgTest);
+        double b = Math.abs(diff - this.avgTraining);
+        if(a < b) {
         	return "Test";
         }else {
         	return "Training";
