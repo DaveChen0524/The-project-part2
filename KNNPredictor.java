@@ -1,4 +1,5 @@
-package project3;
+
+package project4;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -19,7 +20,6 @@ public class KNNPredictor extends Predictor{
     public KNNPredictor(int k) {
         this.k = k;
     }
-
     private List<String> getRecordFromLine(String line) {
         List<String> values = new ArrayList<String>();
         try (Scanner rowScanner = new Scanner(line)) {
@@ -30,7 +30,6 @@ public class KNNPredictor extends Predictor{
         }
         return values;
     }
-
     @Override
     ArrayList<DataPoint> readData(String fileName) {
         ArrayList<DataPoint> dps = new ArrayList<DataPoint>();

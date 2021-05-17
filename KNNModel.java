@@ -1,11 +1,9 @@
-package project3;
-import javax.xml.crypto.Data;
-import java.io.File;
-import java.io.IOException;
+package project4;
+
 import java.util.*;
 
 public class KNNModel {
-    private final int k = 5;
+    private int k = 5;
     private List<DataPoint> testData;
     private List<DataPoint> trainData;
     private int trainSize;
@@ -17,10 +15,20 @@ public class KNNModel {
 
     public KNNModel() {
     }
+    public KNNModel(int k) {
+        this.k = k;
+    }
+
+
     public void readData(List<DataPoint> testData, List<DataPoint> trainData) {
         this.trainData = trainData;
         this.testData = testData;
-        this.trainSize = trainData.size();}
+        this.trainSize = trainData.size();
+
+    }
+
+
+
     private double getDistance(DataPoint p1, DataPoint p2) {
         double f1_p1 = p1.getF1();
         double f2_p1 = p1.getF2();
@@ -29,6 +37,8 @@ public class KNNModel {
         double result = Math.sqrt(Math.pow(f1_p1 - f1_p2,2) + Math.pow(f2_p1-f2_p2,2));
         return result;
     }
+
+
     public String test(DataPoint data) {
         Double[][] distanceAndLabel = new Double[trainSize][2];
         int trainCount = 0;
@@ -36,7 +46,8 @@ public class KNNModel {
             distanceAndLabel[trainCount][1] = Double.parseDouble(dp.getLabel());
             distanceAndLabel[trainCount][0] = getDistance(data,dp);
             trainCount++;
-            }
+
+        }
 
 
         Arrays.sort(distanceAndLabel, new Comparator<Double[]>() {
@@ -63,12 +74,15 @@ public class KNNModel {
             return "1";
         }
     }
+
+
     public void train() {
 
         for (int i = 0; i < testData.size(); i++) {
             DataPoint dpTest = testData.get(i);
             String labelTest = test(dpTest);
             String labelActual = testData.get(i).getLabel();
+
             if (labelTest.equals("1") && labelActual.equals("1")) {
                 testData.get(i).setType("truePositive");
                 truePositive++;
@@ -88,14 +102,20 @@ public class KNNModel {
 
         }
     }
+
+
     public Double getAccuracy() {
         return (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
     }
+
     public Double getPrecision() {
         return truePositive / (truePositive + falseNegative);
     }
 
 
+    public void setK(int k) {
+        this.k = k;
+    }
 
 
 }

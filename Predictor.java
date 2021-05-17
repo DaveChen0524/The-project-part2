@@ -1,4 +1,5 @@
-package project3;
+package project4;
+
 import java.util.ArrayList;
 
 public abstract class Predictor {

@@ -1,4 +1,4 @@
-package project3;
+package project4;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,14 +25,14 @@ private void initAndShowGUI(Double accuracy, Double precision) {
         contentPane.add(new JLabel("click to change K value: "));
         JButton resetK = new JButton("reset");
         contentPane.add(k_value);contentPane.add(resetK);
-        contentPane.add(new Label("accuracy: "));
+        contentPane.add(new Label("the accuracy: "));
         String acc = new DecimalFormat("##.##").format(accuracy);
         Label accL = new Label(acc);contentPane.add(accL);
         String pre = new DecimalFormat("##.##").format(precision);
         Label preL = new Label(pre);
         contentPane.add(new Label("the precision: "));
         contentPane.add(preL);
-        myFrame.pack(); myFrame.setVisible(true);myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        myFrame.pack();myFrame.setVisible(true);myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         resetK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,7 +50,8 @@ private void initAndShowGUI(Double accuracy, Double precision) {
         });
     }
 public static void main(String args[]) {
-    	Driver driver = new Driver();
+
+        Driver driver = new Driver();
         KNNPredictor knnPredictor = new KNNPredictor(5);
         String fileName = "titanic.csv";
 

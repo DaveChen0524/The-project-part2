@@ -1,4 +1,4 @@
-package project3;
+ package project4;
 
 public class DataPoint {
 
@@ -46,7 +46,7 @@ public class DataPoint {
     public Boolean getTest() {
         return isTest;
     }
-
+    
     public void setTest(Boolean isTest) {
         this.isTest = isTest;
     }public String getType() {

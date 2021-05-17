@@ -1,6 +1,11 @@
-package project3;
+package project4;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -22,7 +27,7 @@ public class Graph extends JPanel {
     private final Color trueNegativeColor = new Color(255,0,0);
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
     private static int pointWidth = 15;
-    // Number and width
+    // Number of grids and the padding width
     private int numXGridLines = 6;
     private int numYGridLines = 6;
     private int padding = 40;
@@ -44,6 +49,15 @@ public class Graph extends JPanel {
         return knnModel;
     }
 
+    public void reTrain(List<DataPoint> testData, List<DataPoint> trainData,int k) {
+        this.data = testData;
+        // TODO: instantiate a KNNModel variable
+        // TODO: Run train with the trainData
+        this.knnModel = new KNNModel(k);
+        knnModel.readData(testData,trainData);
+        knnModel.train();
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -57,9 +71,10 @@ public class Graph extends JPanel {
         double maxF2 = getMaxF2Data();
 
         g2.setColor(Color.WHITE);
-        g2.fillRect(labelPadding+padding, padding, getWidth() - (2 * padding) - 
+        g2.fillRect(padding + labelPadding, padding, getWidth() - (2 * padding) - 
         		labelPadding, getHeight() - 2 * padding - labelPadding);
         g2.setColor(Color.BLUE);
+
         double yGridRatio = (maxF2 - minF2) / numYGridLines;
         for (int i = 0; i < numYGridLines + 1; i++) {
             int x0 = padding + labelPadding;
@@ -198,6 +213,15 @@ public class Graph extends JPanel {
 
 	    /* Main panel */
         Graph mainPanel = new Graph(testData, trainData);
+        JLabel chooseValue = new JLabel("Choose the majority value: ");
+        JSlider slider = new JSlider(2,25,5);
+        slider.setMajorTickSpacing(5);
+        slider.setMinorTickSpacing(1);
+        slider.setPaintTicks(true);
+
+        JButton runTest = new JButton("run test");
+
+
 
         Double precision = mainPanel.getKnnModel().getPrecision();
         Double accuracy = mainPanel.getKnnModel().getAccuracy();
@@ -206,11 +230,14 @@ public class Graph extends JPanel {
         mainPanel.setPreferredSize(new Dimension(700, 600));
 
         /* creating the frame */
-        JFrame frame = new JFrame("CS 112 project Part 3");
+        JFrame frame = new JFrame("CS 112 Lab Part 3");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = new JPanel();
         contentPane.add(mainPanel);
         frame.getContentPane().add(contentPane);
+        contentPane.add(chooseValue);
+        contentPane.add(slider);
+        contentPane.add(runTest);
 
         JPanel dataPanel = new JPanel();
         dataPanel.setLayout(new GridLayout(5, 5));
@@ -224,6 +251,22 @@ public class Graph extends JPanel {
         dataPanel.add(preL);
 
         contentPane.add(dataPanel);
+
+        runTest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.reTrain(testData,trainData,slider.getValue());
+                mainPanel.revalidate();
+                mainPanel.repaint();
+                System.out.println(slider.getValue());
+                Double precision = mainPanel.getKnnModel().getPrecision();
+                Double accuracy = mainPanel.getKnnModel().getAccuracy();
+                String acc = new DecimalFormat("##.##").format(accuracy);
+                String pre = new DecimalFormat("##.##").format(precision);
+                accL.setText(acc);
+                preL.setText(pre);
+            }
+        });
 
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -249,7 +292,7 @@ public class Graph extends JPanel {
          public void run() {
              List<DataPoint> train = new ArrayList<DataPoint>();
              List<DataPoint> test = new ArrayList<DataPoint>();
-             try (Scanner scanner = new Scanner(new File("titanic.csv"));) {
+             try (Scanner scanner = new Scanner(new File("src/titanic.csv"));) {
                  List<String> records;
                  while (scanner.hasNextLine()) {
                      records = getRecordFromLine(scanner.nextLine());
